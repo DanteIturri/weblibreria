@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <!-- font de la web-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="css/all.min.css">
+    <title>Libreria EGG -- Lbros</title>
+</head>
+
+<body>
+<header>
+
+    <div class="barra_paginas"><!--Barra de paginas-->
+        <div class="logo_paginas">
+            <a href="/"><img class=" logo logo--tamaño" src="image/logo.svg " alt="Logo Librería Egg"></a>
+        </div>
+        <nav class="navegacion">
+            <a class="navegacion__enlace" href="/libros">Libros</a>
+            <a class="navegacion__enlace" href="/autor">Autores</a>
+            <a class="navegacion__enlace" href="/editorial">Editoriales</a>
+        </nav>
+    </div>
+</header>
+<div class="contenedor">
+    <div class="contenido__libro">
+        <div class="formulario__libro">
+            <h3>Cargar Editorial</h3>
+            <form action="/editorialRegistro" method="post">
+                <label for="nombre">Editorial:</label>
+                <input type="text" name="nombre" id="nombre" placeholder="Carga la Editorial">
+                <button class="formulario__botones" type="submit"><span>Guardar</span></button>
+            </form>
+        </div>
+
+        <div class="contenedor__libros">
+            <div th:each="editoriales : ${editoriales}" class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3 th:text="${editoriales.nombre}">lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapalibro.jpg" alt="">
+                    </div>
+                    <div class="libro__datos">
+                        <p>Nombre: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                    </div>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="/editar_editorial"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+
+
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <h5><i class="fa fa-copyright"> </i> Dante iturri </h5>
+</footer>
+</body>
