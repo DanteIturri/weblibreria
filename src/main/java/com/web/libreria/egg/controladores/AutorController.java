@@ -40,7 +40,7 @@ public class AutorController {
     }
 
     @PostMapping("/autorRegistro")
-    public String autorRegistro(@RequestParam String nombre) {
+    public String autorRegistro(ModelMap modelo, @RequestParam String nombre) {
 
 //        System.out.println("nombre: " +nombre);
 
@@ -48,6 +48,7 @@ public class AutorController {
             autorservicio.guardarAutor(nombre);
         } catch (ErrorServicio ex) {
             Logger.getLogger(AutorController.class.getName()).log(Level.SEVERE, null, ex);
+            modelo.put("error", ex.getMessage());
         }
         return "autor.html";
     }

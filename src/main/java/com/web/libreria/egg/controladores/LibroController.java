@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -32,24 +33,30 @@ public class LibroController {
     @Autowired
     private LibroRepositorio librorepositorio;
 
-
+//* Envío de datos de autores, editoriales y Libros
     @GetMapping("/libros")
     public String libros(ModelMap modelo) {
-        List<Autor> autores = autorrepositorio.findAll();
-        modelo.put("autores", autores);
-        List<Editorial> editoriales = editorialrepositorio.findAll();
-        modelo.put("editoriales", editoriales);
-        List<Libro> libros = librorepositorio.findAll();
-        modelo.put("libros", libros);
+        List<Autor> autores = autorrepositorio.findAll();//* guardo en una lista todos los autores
+        modelo.put("autores", autores);//* envio la lista de autores al modelo
+        List<Editorial> editoriales = editorialrepositorio.findAll();//* guardo en una lista todas las editoriales
+        modelo.put("editoriales", editoriales);//* envio la lista de editoriales al modelo
+        List<Libro> libros = librorepositorio.findAll();//* guardo en una lista todos los libros
+        modelo.put("libros", libros);//* envio la lista de libros al modelo
         return "libros";
     }
 
-    @GetMapping("/editar_libro")
-    public String editar_libro() {
+    @GetMapping("/editar_libro/{id}")//! uso de path variable
+    public String editar_libro(@PathVariable String id, ModelMap modelo) {
+
+        modelo.put("libro",libroservicio.InsertarLibroPorId(id));
+        List<Autor> autores = autorrepositorio.findAll();//* guardo en una lista todos los autores
+        modelo.put("autores", autores);//* envio la lista de autores al modelo
+        List<Editorial> editoriales = editorialrepositorio.findAll();//* guardo en una lista todas las editoriales
+        modelo.put("editoriales", editoriales);//* envio la lista de editoriales al modelo
         return "editar_libro";
     }
 
-
+//* metodo para guardar libro
     @PostMapping("/libros")
     public String libros(ModelMap modelo, @RequestParam(defaultValue = "0") Long isbn, @RequestParam String titulo, @RequestParam(defaultValue = "0") Integer anio, @RequestParam(defaultValue = "0") Integer ejemplares, @RequestParam(defaultValue = "0") Integer ejemplaresPrestados, @RequestParam(defaultValue = "0") Integer ejemplaresRestantes, @RequestParam(defaultValue = "null") String idAutor, @RequestParam(defaultValue = "null") String idEditorial) {
         List<Autor> autores = autorrepositorio.findAll();
@@ -58,8 +65,8 @@ public class LibroController {
         modelo.put("editoriales", editoriales);
         List<Libro> libros = librorepositorio.findAll();
         modelo.put("libros", libros);
-//        System.out.println("id Autor: " + idAutor);
-//        System.out.println("id Editorial: " + idEditorial);
+//todo        System.out.println("id Autor: " + idAutor);   para ver si funciona
+//todo       System.out.println("id Editorial: " + idEditorial); para ver si funciona
         try {
             libroservicio.guardarLibros(isbn, titulo, anio, ejemplares, ejemplaresPrestados, ejemplaresRestantes, idAutor, idEditorial);
         } catch (ErrorServicio ex) {

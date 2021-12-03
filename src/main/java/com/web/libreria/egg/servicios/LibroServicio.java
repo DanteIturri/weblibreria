@@ -22,16 +22,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Marcamos la clase como un servicio con  => @Service y con esto declaramos que
- * es un servicio de Spring
+ * * Marcamos la clase como un servicio con  => @Service y con esto declaramos que
+ * * es un servicio de Spring
  */
 @Service
 public class LibroServicio  {
 
-    @Autowired//Esta variable se inicializa en el servidor de aplicaciones
+    @Autowired//*Esta variable se inicializa en el servidor de aplicaciones
     private LibroRepositorio libroRepositorio;
-    
-   
     @Autowired
     private AutorRepositorio autorRepositorio;
     @Autowired
@@ -46,8 +44,8 @@ public class LibroServicio  {
         
         comprobarDatos( isbn, titulo, anio, ejemplares);
 
-        Autor autor = autorRepositorio.findById(idAutor).get();/* !*Busco el autor por id lo inserto en objeto */
-        Editorial editorial = editorialRepositorio.findById(idEditorial).get();/* !*Busco la Editorial   por id lo inserto en objeto */
+        Autor autor = autorRepositorio.findById(idAutor).get();//!Busco el autor por id lo inserto en objeto
+        Editorial editorial = editorialRepositorio.findById(idEditorial).get();//*Busco la Editorial   por id lo inserto en objeto
         //Comprobación de los datos
         // Creo un objeto & Seteo los atributos del clase Libro
         Libro libro = new Libro();
@@ -71,9 +69,15 @@ public class LibroServicio  {
      * Metodo para modificar los libros registradps
      */
     @Transactional
-    public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares,String nombre, String nombreEditorial) throws ErrorServicio {
+    public Libro InsertarLibroPorId(String id){
+        return libroRepositorio.getOne(id);
+    }
+    @Transactional
+    public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares,String idAutor, String idEditorial) throws ErrorServicio {
 
         comprobarDatos(isbn, titulo, anio, ejemplares);
+        Autor autor = autorRepositorio.findById(idAutor).get();//!Busco el autor por id lo inserto en objeto
+        Editorial editorial = editorialRepositorio.findById(idEditorial).get();//*Busco la Editorial   por id lo inserto en objet
 
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -121,7 +125,7 @@ public class LibroServicio  {
     }
     
         
-
+//************************Comprobacion de datos*****************************
     private void comprobarDatos( Long isbn, String titulo, Integer anio, Integer ejemplares) throws ErrorServicio {
         if (isbn == 0) {
 

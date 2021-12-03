@@ -7,7 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity//declaro la entidad
+@Entity//*declaro la entidad
 public class Libro {
     @Id
     @GeneratedValue(generator = "uuid")

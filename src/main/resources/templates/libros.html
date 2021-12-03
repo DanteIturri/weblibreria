@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css"><!--Mis Estilos-->
+    <link rel="stylesheet" href="/css/normalize.css"><!--Estilos  normalize-->
     <!-- font de la web-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/all.min.css"><!--Estilos de font FontAwesome5Free-->
     <title>Libreria EGG -- Libros</title>
 </head>
 <body>
@@ -32,12 +32,12 @@
         <div class="contenido__libro">
             <div class="formulario__libro">
                 <h3>Cargar Libro</h3>
-                <form th:action="@{/libros}" method="POST">
+                <form th:action="@{/libros}"  method="POST"><!--Comienzo de Formulario-->
                     <!-- Muestro mi Error -->
                     <div th:if="${error } != null">
                         <p th:text="${error}"></p>
                     </div>
-                    <!-- Principio de mis input formulario -->
+                    <!-- Principio de mis input de formulario -->
                     <label for="isbn">Isbn:</label>
                     <input type="number" name="isbn" placeholder="isbn del Libro" min="0" >
                     <label for="titulo">Titulo:</label>
@@ -59,7 +59,7 @@
                         <option th:each="editorial : ${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre}">Seleccione un Editorial</option>
                     </select>
                     <button class="formulario__botones" type="submit"><span>Guardar</span></button>
-                </form>
+                </form><!--fin de Formulario-->
             </div>
             <div class="contenedor__libros">
                 <div th:each="libros : ${libros}" class="libro"><!-- Comienzo de libro-->
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="libro__botones">
-                        <button class="libro__botones--btn"><a th:href="@{/editar_libro}"><i class="fa fa-pencil-alt"
+                        <button class="libro__botones--btn"><a th:href="@{/editar_libro/__${libros.id}__}"><i class="fa fa-pencil-alt"
                                     aria-hidden="true"></i></a></button>
                         <button class="libro__botones--btn"><a><i class="fa fa-trash"
                                     aria-hidden="true"></i></a></button>

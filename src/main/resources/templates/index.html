@@ -17,7 +17,7 @@
 <body>
     <header class="header hero">
         <div class="barra">
-            <div class="logo">
+            <div class="logo" >
                 <a href="/"><img class="logo--tamaño" src="image/logo.svg" alt="Logo Librería Egg"></a>
             </div>
             <div class="buscador">
@@ -28,8 +28,8 @@
             </div>
             <nav class="navegacion">
                 <a th:href="@{/libros}" class="navegacion__enlace">Libros</a>
-                <a href="/autor" class="navegacion__enlace">Autores</a>
-                <a href="/editorial" class="navegacion__enlace">Editoriales</a>
+                <a th:href="@{/autor}" class="navegacion__enlace">Autores</a>
+                <a th:href="@{/editorial}" class="navegacion__enlace">Editoriales</a>
             </nav>
         </div>
         <div class="menu">
@@ -39,10 +39,10 @@
                     <a class="menu__contenido__link" th:href="@{/libros}"><span>Libros</span></a>
                 </div>
                 <div class="menu__contenido__item">
-                    <a class="menu__contenido__link" href="/autor"><span>Autores</span></a>
+                    <a class="menu__contenido__link" th:href="@{/autor}"><span>Autores</span></a>
                 </div>
                 <div class="menu__contenido__item">
-                    <a class="menu__contenido__link" href="/editorial"><span>Editoriales</span></a>
+                    <a class="menu__contenido__link" th:href="@{/editorial}"><span>Editoriales</span></a>
                 </div>
             </div>
         </div>

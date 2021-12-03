@@ -1,283 +1,319 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" >
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/normalize.css">
     <!-- font de la web-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="css/all.min.css">
+          rel="stylesheet">
+    <link rel="stylesheet" href="/css/all.min.css">
     <title>Libreria EGG -- Lbros</title>
 </head>
 
 <body>
-    <header>
+<header>
 
-        <div class="barra_paginas">
-            <div class="logo_paginas">
-                <a href="/"><img class=" logo logo--tamaño" src="image/logo.svg " alt="Logo Librería Egg"></a>
-            </div>
-            <nav class="navegacion">
-                <a class="navegacion__enlace" href="/libros">Libros</a>
-                <a class="navegacion__enlace" href="/autor">Autores</a>
-                <a class="navegacion__enlace" href="/editorial">Editoriales</a>
-            </nav>
+    <div class="barra_paginas">
+        <div class="logo_paginas">
+            <a href="/"><img class=" logo logo--tamaño" src="/image/logo.svg " alt="Logo Librería Egg"></a>
         </div>
-    </header>
-    <div class="contenedor">
-        <div class="contenido__libro">
-            <div class="formulario__libro">
-                <h3>Editar Libro</h3>
-                <form action="">
-                    <label for="">Titulo:</label>
-                    <input type="text" placeholder="Titulo del libro">
-                    <label for="">Año:</label>
-                    <input type="number" placeholder="Ingrese un año">
-                    <label for="">Ejemplares:</label>
-                    <input type="number" placeholder="Ingrese cantidad de ejemplares">
-                    <label for="">Ejemplares Prestados:</label>
-                    <input type="number" placeholder="Cantidad de Ejemplares Prestados">
-                    <label for="">Ejemplares Restantes:</label>
-                    <input type="number" placeholder="Cantidad de Ejemplares Restantes">
-                    <label for="">Autor:</label>
-                    <input type="text" placeholder="Ingrese un Autor">
-                    <label for="">Editorial:</label>
-                    <input type="text" placeholder="Ingrese una Editorial">
-                    <button class="formulario__botones" type="submit"><span>Guardar</span></button>
-                </form>
-            </div>
-            <div class="contenedor__libros">
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
+        <nav class="navegacion">
+            <a class="navegacion__enlace" href="/libros">Libros</a>
+            <a class="navegacion__enlace" href="/autor">Autores</a>
+            <a class="navegacion__enlace" href="/editorial">Editoriales</a>
+        </nav>
+    </div>
+</header>
+<div class="contenedor">
+    <div class="contenido__libro">
+        <div class="formulario__libro">
+            <h3>Editar Libro</h3>
+            <form th:action="@{/editar_libro/__${libro.id}__}">
+                <input type="hidden" name="id" th:value="${libro.id}">
+                <label for="titulo">Titulo:</label>
+                <input type="text" id="titulo" th:value="${libro.titulo}" placeholder="Titulo del libro">
+                <label for="anio">Año:</label>
+                <input type="number" id="anio" th:value="${libro.anio}" placeholder="Ingrese un año">
+                <label for="ejemplares">Ejemplares:</label>
+                <input type="number" id="ejemplares" th:value="${libro.emplares}"
+                       placeholder="Ingrese cantidad de ejemplares">
+                <label for="ejemplaresPrestados">Ejemplares Prestados:</label>
+                <input type="number" id="ejemplaresPrestados" th:value="${libro.emplaresPrestados}"
+                       placeholder="Cantidad de Ejemplares Prestados">
+                <label for="ejemplaresRestantes">Ejemplares Restantes:</label>
+                <input type="number" id="ejemplaresRestantes" th:value="${libro.emplaresRestantes}"
+                       placeholder="Cantidad de Ejemplares Restantes">
+                <label for="nombreAutor">Autor:</label>
+                <select class="selected" name="idAutor" id="nombreAutor">
+                    <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombre}"
+                            th:selected="${libro.autor != null && autor.id == libro.autor.id}">
+                        Seleccione un
+                        Autor
+                    </option>
+                </select>
+                <label for="nombreEditorial">Editorial:</label>
+                <select class="selected" name="idEditorial" id="nombreEditorial">
+                    <option th:each="editorial : ${editoriales}" th:value="${editorial.id}"
+                            th:text="${editorial.nombre}"
+                            th:selected="${libro.editorial != null && editorial.id == libro.editorial.id}">Seleccione un
+                        Editorial
+                    </option>
+                </select>
+                <button class="formulario__botones" type="submit"><span>Guardar</span></button>
+            </form>
+        </div>
+        <div class="contenedor__libros">
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapaLibro.jpg" alt="">
                     </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="/editar_libro"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="/editar_libro"><i class="fa fa-pencil-alt"
+                                                                                   aria-hidden="true"></i></a></button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="/image/tapaLibro.jpg" alt="">
                     </div>
-                </div><!-- fin de libro-->
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapaLibro.jpg" alt="">
                     </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                </div><!-- fin de libro-->
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapaLibro.jpg" alt="">
                     </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapaLibro.jpg" alt="">
                     </div>
-                </div><!-- fin de libro-->
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapaLibro.jpg" alt="">
                     </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                </div><!-- fin de libro-->
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapaLibro.jpg" alt="">
                     </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapaLibro.jpg" alt="">
                     </div>
-                </div><!-- fin de libro-->
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapaLibro.jpg" alt="">
                     </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                </div><!-- fin de libro-->
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+            <div class="libro"><!-- Comienzo de libro-->
+                <div class="libro__titulo">
+                    <h3>lorem ipsum</h3>
+                </div>
+                <div class="libro__contenido">
+                    <div class="libro__imagen">
+                        <img class="img" src="image/tapaLibro.jpg" alt="">
                     </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
+                    <div class="libro__datos">
+                        <p>Año: <span class="libro__datos--item">1984</span></p>
+                        <p>Ejemplares: <span class="libro__datos--item">5</span></p>
+                        <p>Ejemplares prestados: <span class="libro__datos--item">2</span></p>
+                        <p>Ejemplares restantes: <span class="libro__datos--item">3</span></p>
+                        <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span></p>
+                        <p>Editorial: <span class="libro__datos--item">EGG</span></p>
                     </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
-                    </div>
-                </div><!-- fin de libro-->
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
-                    </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
-                    </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
-                    </div>
-                </div><!-- fin de libro-->
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
-                    </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
-                    </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
-                    </div>
-                </div><!-- fin de libro-->
-                <div class="libro"><!-- Comienzo de libro-->
-                    <div class="libro__titulo">
-                        <h3>lorem ipsum</h3>
-                    </div>
-                    <div class="libro__contenido">
-                        <div class="libro__imagen">
-                            <img class="img" src="image/tapaLibro.jpg" alt="">
-                        </div>
-                        <div class="libro__datos">
-                            <p>Año: <span class="libro__datos--item">1984</span> </p>
-                            <p>Ejemplares: <span class="libro__datos--item">5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item">EGG</span> </p>
-                        </div>
-                    </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
-                    </div>
-                </div><!-- fin de libro-->
-                
-            </div>
+                </div>
+                <div class="libro__botones">
+                    <button class="libro__botones--btn"><a href="editar_libro.html"><i class="fa fa-pencil-alt"
+                                                                                       aria-hidden="true"></i></a>
+                    </button>
+                    <button class="libro__botones--btn"><a><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+                </div>
+            </div><!-- fin de libro-->
+
         </div>
     </div>
-    <footer class="footer">
-        <h5>  <i class="fa fa-copyright"> </i> Dante iturri </h5>
-    </footer>
+</div>
+<footer class="footer">
+    <h5><i class="fa fa-copyright"> </i> Dante iturri </h5>
+</footer>
 </body>
+</html>
