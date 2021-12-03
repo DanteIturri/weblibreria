@@ -58,8 +58,8 @@ public class LibroController {
         modelo.put("editoriales", editoriales);
         List<Libro> libros = librorepositorio.findAll();
         modelo.put("libros", libros);
-//        System.out.println("id Autor: " + idAutor);
-//        System.out.println("id Editorial: " + idEditorial);
+//        System.out.println("id Autor: " + idAutor); // * para ver si funciona
+//        System.out.println("id Editorial: " + idEditorial);// * para ver si funciona
         try {
             libroservicio.guardarLibros(isbn, titulo, anio, ejemplares, ejemplaresPrestados, ejemplaresRestantes, idAutor, idEditorial);
         } catch (ErrorServicio ex) {
