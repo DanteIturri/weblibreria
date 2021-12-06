@@ -2,24 +2,28 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css"><!--Mis Estilos-->
-    <link rel="stylesheet" href="/css/normalize.css"><!--Estilos  normalize-->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <!--Mis Estilos-->
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <!--Estilos  normalize-->
     <!-- font de la web-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/css/all.min.css"><!--Estilos de font FontAwesome5Free-->
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/css/all.min.css" />
+    <!--Estilos de font FontAwesome5Free-->
     <title>Libreria EGG -- Libros</title>
 </head>
+
 <body>
     <header>
         <div class="barra_paginas">
             <div class="logo_paginas">
-                <a href="/"><img class=" logo logo--tamaño" src="/image/logo.svg " alt="Logo Librería Egg"></a>
+                <a href="/"><img class="logo logo--tamaño" src="/image/logo.svg " alt="Logo Librería Egg" /></a>
             </div>
             <nav class="navegacion">
                 <a class="navegacion__enlace" href="/libros">Libros</a>
@@ -32,64 +36,101 @@
         <div class="contenido__libro">
             <div class="formulario__libro">
                 <h3>Cargar Libro</h3>
-                <form th:action="@{/libros}"  method="POST"><!--Comienzo de Formulario-->
+                <form th:action="@{/libros}" method="POST">
+                    <!--Comienzo de Formulario-->
                     <!-- Muestro mi Error -->
                     <div th:if="${error } != null">
                         <p th:text="${error}"></p>
                     </div>
                     <!-- Principio de mis input de formulario -->
                     <label for="isbn">Isbn:</label>
-                    <input type="number" name="isbn" placeholder="isbn del Libro" min="0" >
+                    <input type="number" name="isbn" placeholder="isbn del Libro" min="0" />
                     <label for="titulo">Titulo:</label>
-                    <input type="text" name="titulo" placeholder="Titulo del libro">
+                    <input type="text" name="titulo" placeholder="Titulo del libro" />
                     <label for="anio">Año:</label>
-                    <input type="number" name="anio" placeholder="Ingrese un año" min="1400">
+                    <input type="number" name="anio" placeholder="Ingrese un año" min="1400" />
                     <label for="ejemplares">Ejemplares:</label>
-                    <input type="number" name="ejemplares" placeholder="Ingrese cantidad de ejemplares" min="1">
+                    <input type="number" name="ejemplares" placeholder="Ingrese cantidad de ejemplares" min="1" />
                     <label for="ejemplaresPrestados">Ejemplares Prestados:</label>
-                    <input type="number" name="ejemplaresPrestados" placeholder="Cantidad de Ejemplares Prestados" min="0">
+                    <input type="number" name="ejemplaresPrestados" placeholder="Cantidad de Ejemplares Prestados"
+                        min="0" />
                     <label for="ejemplaresRestantes">Ejemplares Restantes:</label>
-                    <input type="number" name="ejemplaresRestantes" placeholder="Cantidad de Ejemplares Restantes" min="0">
+                    <input type="number" name="ejemplaresRestantes" placeholder="Cantidad de Ejemplares Restantes"
+                        min="0" />
                     <label for="nombre">Autor:</label>
                     <select class="selected" name="idAutor" id="">
-                        <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombre}">Seleccione un Autor</option>
+                        <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombre}">
+                            Seleccione un Autor
+                        </option>
                     </select>
                     <label for="nombreEditorial">Editorial:</label>
                     <select class="selected" name="idEditorial" id="">
-                        <option th:each="editorial : ${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre}">Seleccione un Editorial</option>
+                        <option th:each="editorial : ${editoriales}" th:value="${editorial.id}"
+                            th:text="${editorial.nombre}">
+                            Seleccione un Editorial
+                        </option>
                     </select>
-                    <button class="formulario__botones" type="submit"><span>Guardar</span></button>
-                </form><!--fin de Formulario-->
+                    <button class="formulario__botones" type="submit">
+                        <span>Guardar</span>
+                    </button>
+                </form>
+                <!--fin de Formulario-->
             </div>
             <div class="contenedor__libros">
-                <div th:each="libros : ${libros}" class="libro"><!-- Comienzo de libro-->
-                    <div  class="libro__titulo">
+                <div th:each="libros : ${libros}" class="libro">
+                    <!-- Comienzo de libro-->
+                    <div class="libro__titulo">
                         <h3 th:text="${libros.titulo}"></h3>
                     </div>
                     <div class="libro__contenido">
                         <div class="libro__imagen">
-                            <img class="img" src="/image/tapaLibro.jpg" alt="">
+                            <img class="img" src="/image/tapaLibro.jpg" alt="Tapa de Libro" />
                         </div>
                         <div class="libro__datos">
-                            <p >Año: <span class="libro__datos--item" th:text="${libros.anio}" >Null</span></p>
-                            <p>Ejemplares: <span class="libro__datos--item" th:text="${libros.emplares}" >5</span> </p>
-                            <p>Ejemplares prestados: <span class="libro__datos--item" th:text="${libros.emplaresPrestados}">2</span> </p>
-                            <p>Ejemplares restantes: <span class="libro__datos--item" th:text="${libros.emplaresRestantes}">3</span> </p>
-                            <p>Autor: <span class="libro__datos--item" th:text="${libros.autor.nombre}"> Pepito la pepa</span> </p>
-                            <p>Editorial: <span class="libro__datos--item" th:text="${libros.editorial.nombre}">EGG</span> </p>
+                            <p>
+                                Año:
+                                <span class="libro__datos--item" th:text="${libros.anio}">Null</span>
+                            </p>
+                            <p>
+                                Ejemplares:
+                                <span class="libro__datos--item" th:text="${libros.emplares}">5</span>
+                            </p>
+                            <p>
+                                Ejemplares prestados:
+                                <span class="libro__datos--item" th:text="${libros.emplaresPrestados}">2</span>
+                            </p>
+                            <p>
+                                Ejemplares restantes:
+                                <span class="libro__datos--item" th:text="${libros.emplaresRestantes}">3</span>
+                            </p>
+                            <p>
+                                Autor:
+                                <span class="libro__datos--item" th:text="${libros.autor.nombre}">
+                                    Pepito la pepa</span>
+                            </p>
+                            <p>
+                                Editorial:
+                                <span class="libro__datos--item" th:text="${libros.editorial.nombre}">EGG</span>
+                            </p>
+                            <div class="libro__botones">
+                                <button class="libro__botones--btn">
+                                    <a th:href="@{/editar_libro/__${libros.id}__}"><i class="fa fa-pencil-alt"
+                                            aria-hidden="true"></i></a>
+                                </button>
+                                <button class="libro__botones--btn">
+                                    <a><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="libro__botones">
-                        <button class="libro__botones--btn"><a th:href="@{/editar_libro/__${libros.id}__}"><i class="fa fa-pencil-alt"
-                                    aria-hidden="true"></i></a></button>
-                        <button class="libro__botones--btn"><a><i class="fa fa-trash"
-                                    aria-hidden="true"></i></a></button>
-                    </div>
-                </div><!-- fin de libro-->
-            </div>
+                </div>
+                <!-- fin de libro-->
             </div>
         </div>
+    </div>
     <footer class="footer">
-        <h5> <i class="fa fa-copyright"> </i> Dante iturri </h5>
+        <h5><i class="fa fa-copyright"> </i> Dante iturri</h5>
     </footer>
 </body>
+
+</html>

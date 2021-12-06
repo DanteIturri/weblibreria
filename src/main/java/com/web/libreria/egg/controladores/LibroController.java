@@ -59,9 +59,13 @@ public class LibroController {
 //* metodo para guardar libro
     @PostMapping("/libros")
     public String libros(ModelMap modelo, @RequestParam(defaultValue = "0") Long isbn, @RequestParam String titulo, @RequestParam(defaultValue = "0") Integer anio, @RequestParam(defaultValue = "0") Integer ejemplares, @RequestParam(defaultValue = "0") Integer ejemplaresPrestados, @RequestParam(defaultValue = "0") Integer ejemplaresRestantes, @RequestParam(defaultValue = "null") String idAutor, @RequestParam(defaultValue = "null") String idEditorial) {
+        //! Creo una lista de autores  para mostrar en pagina de post
         List<Autor> autores = autorrepositorio.findAll();
+        //? envio la lista a traves del modelo
         modelo.put("autores", autores);
+        //! Creo una lista de editoriales  para mostrar en pagina de post
         List<Editorial> editoriales = editorialrepositorio.findAll();
+        //? envio la lista a traves del modelo
         modelo.put("editoriales", editoriales);
         List<Libro> libros = librorepositorio.findAll();
         modelo.put("libros", libros);
@@ -76,6 +80,19 @@ public class LibroController {
             return "/libros";
         }
         return "libros";
+    }
+    @PostMapping("/editar_libro/{id}")
+    public String editar_libro(ModelMap modelo, @PathVariable String id, @RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam Integer ejemplaresPrestados, @RequestParam Integer ejemplaresRestantes, @RequestParam String idAutor, @RequestParam String idEditorial) {
+
+        System.out.println("id: " + id);
+        System.out.println("titulo: " + titulo);
+      try{
+        libroservicio.modificarLibro(id, isbn, titulo, anio, ejemplares, ejemplaresPrestados, ejemplaresRestantes, idAutor, idEditorial);
+      }catch (ErrorServicio ex){
+           modelo.put("error", ex.getMessage());
+      }
+  return "redirect:/libros";
+
     }
 
 }
