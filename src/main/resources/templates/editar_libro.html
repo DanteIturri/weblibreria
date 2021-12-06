@@ -34,20 +34,22 @@
     <div class="contenido__libro">
         <div class="formulario__libro">
             <h3>Editar Libro</h3>
-            <form th:action="@{/editar_libro/__${libro.id}__}">
+            <form th:action="@{/editar_libro/__${libro.id}__}" method="POST">
                 <input type="hidden" name="id" th:value="${libro.id}">
+                <label for="isbn">Isbn:</label>
+                <input type="number" name="isbn" th:value="${libro.isbn}" placeholder="isbn del Libro" min="0" >
                 <label for="titulo">Titulo:</label>
-                <input type="text" id="titulo" th:value="${libro.titulo}" placeholder="Titulo del libro">
+                <input type="text" id="titulo" name="titulo" th:value="${libro.titulo}" placeholder="Titulo del libro">
                 <label for="anio">Año:</label>
-                <input type="number" id="anio" th:value="${libro.anio}" placeholder="Ingrese un año">
+                <input type="number" id="anio" name="anio"  th:value="${libro.anio}" placeholder="Ingrese un año">
                 <label for="ejemplares">Ejemplares:</label>
-                <input type="number" id="ejemplares" th:value="${libro.emplares}"
+                <input type="number" id="ejemplares" name="ejemplares"  th:value="${libro.emplares}"
                        placeholder="Ingrese cantidad de ejemplares">
                 <label for="ejemplaresPrestados">Ejemplares Prestados:</label>
-                <input type="number" id="ejemplaresPrestados" th:value="${libro.emplaresPrestados}"
+                <input type="number" id="ejemplaresPrestados" name="ejemplaresPrestados" th:value="${libro.emplaresPrestados}"
                        placeholder="Cantidad de Ejemplares Prestados">
                 <label for="ejemplaresRestantes">Ejemplares Restantes:</label>
-                <input type="number" id="ejemplaresRestantes" th:value="${libro.emplaresRestantes}"
+                <input type="number" id="ejemplaresRestantes" name="ejemplaresRestantes" th:value="${libro.emplaresRestantes}"
                        placeholder="Cantidad de Ejemplares Restantes">
                 <label for="nombreAutor">Autor:</label>
                 <select class="selected" name="idAutor" id="nombreAutor">
@@ -65,7 +67,7 @@
                         Editorial
                     </option>
                 </select>
-                <button class="formulario__botones" type="submit"><span>Guardar</span></button>
+                <button class="formulario__botones" type="submit"><span>Editar</span></button>
             </form>
         </div>
         <div class="contenedor__libros">

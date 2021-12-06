@@ -7,7 +7,6 @@ para que la aplicacion cumple las peticiones del usuario
 package com.web.libreria.egg.servicios;
 
 
-
 import com.web.libreria.egg.entidades.Autor;
 import com.web.libreria.egg.entidades.Editorial;
 import com.web.libreria.egg.entidades.Libro;
@@ -15,7 +14,9 @@ import com.web.libreria.egg.errores.ErrorServicio;
 import com.web.libreria.egg.repositorios.AutorRepositorio;
 import com.web.libreria.egg.repositorios.EditorialRepositorio;
 import com.web.libreria.egg.repositorios.LibroRepositorio;
+
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  * * es un servicio de Spring
  */
 @Service
-public class LibroServicio  {
+public class LibroServicio {
 
     @Autowired//*Esta variable se inicializa en el servidor de aplicaciones
     private LibroRepositorio libroRepositorio;
@@ -41,8 +42,8 @@ public class LibroServicio  {
      */
     @Transactional
     public void guardarLibros(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes, String idAutor, String idEditorial) throws ErrorServicio {
-        
-        comprobarDatos( isbn, titulo, anio, ejemplares);
+
+        comprobarDatos(isbn, titulo, anio, ejemplares);
 
         Autor autor = autorRepositorio.findById(idAutor).get();//!Busco el autor por id lo inserto en objeto
         Editorial editorial = editorialRepositorio.findById(idEditorial).get();//*Busco la Editorial   por id lo inserto en objeto
@@ -60,20 +61,22 @@ public class LibroServicio  {
         //metodo para guardar Editorial
         libro.setAutor(autor);
         libro.setEditorial(editorial);
-        
+
         libroRepositorio.save(libro);// LLamo el metodo para presistir en base de datos dentro del repositorio
 
     }
 
+    @Transactional(readOnly = true)
+    //*readOnly = true => es un metodo de solo lectura
+    public Libro InsertarLibroPorId(String id) {
+        return libroRepositorio.getOne(id);
+    }
     /*
      * Metodo para modificar los libros registradps
      */
+
     @Transactional
-    public Libro InsertarLibroPorId(String id){
-        return libroRepositorio.getOne(id);
-    }
-    @Transactional
-    public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares,String idAutor, String idEditorial) throws ErrorServicio {
+    public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes, String idAutor, String idEditorial) throws ErrorServicio {
 
         comprobarDatos(isbn, titulo, anio, ejemplares);
         Autor autor = autorRepositorio.findById(idAutor).get();//!Busco el autor por id lo inserto en objeto
@@ -86,6 +89,10 @@ public class LibroServicio  {
             libro.setTitulo(titulo);
             libro.setAnio(anio);
             libro.setEmplares(ejemplares);
+            libro.setEmplaresPrestados(ejemplaresPrestados);
+            libro.setEmplaresRestantes(ejemplaresRestantes);
+            libro.setAutor(autor);
+            libro.setEditorial(editorial);
 //            libro.setAutor(autorServicio.guardarAutor(nombre));
 //            libro.setEditorial(editorialServicio.guardarEditorial(nombreEditorial));
 
@@ -95,9 +102,10 @@ public class LibroServicio  {
         }
 
     }
+
     @Transactional
     public void bajaLibro(String id) throws ErrorServicio {
-      
+
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Libro libro = respuesta.get();
@@ -109,9 +117,10 @@ public class LibroServicio  {
         }
 
     }
+
     @Transactional
     public void AltaLibro(String id) throws ErrorServicio {
-      
+
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Libro libro = respuesta.get();
@@ -123,10 +132,10 @@ public class LibroServicio  {
         }
 
     }
-    
-        
-//************************Comprobacion de datos*****************************
-    private void comprobarDatos( Long isbn, String titulo, Integer anio, Integer ejemplares) throws ErrorServicio {
+
+
+    //************************Comprobacion de datos*****************************
+    private void comprobarDatos(Long isbn, String titulo, Integer anio, Integer ejemplares) throws ErrorServicio {
         if (isbn == 0) {
 
             throw new ErrorServicio("El isbn no puede ser nulo");
